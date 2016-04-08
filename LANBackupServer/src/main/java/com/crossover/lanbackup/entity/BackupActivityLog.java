@@ -48,7 +48,7 @@ public class BackupActivityLog implements Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "folder_id", nullable = false)
 	public Folder getFolder() {
 		return folder;

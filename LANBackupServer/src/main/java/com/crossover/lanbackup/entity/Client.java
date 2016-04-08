@@ -114,7 +114,7 @@ public class Client implements Serializable {
 		this.enabled = enabled;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client")
 	public Set<Folder> getFolders() {
 		return folders;
 	}
@@ -123,7 +123,7 @@ public class Client implements Serializable {
 		this.folders = folders;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client")
 	public List<ConfigLog> getConfigLogs() {
 		return configLogs;
 	}
@@ -154,8 +154,7 @@ public class Client implements Serializable {
 
 	@Override
 	public String toString() {
-		return "";
-		//return ReflectionToStringBuilder.toString(this, ToStringStyle.DEFAULT_STYLE);
+		return ReflectionToStringBuilder.toString(this, ToStringStyle.DEFAULT_STYLE);
 	}
 
 }

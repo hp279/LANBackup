@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,25 +21,24 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Entity
-@Table(name = "folder")
-public class Folder implements Serializable {
+@Table(name = "config_log")
+public class ConfigLog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private long id;
 	private Client client;
-	private String path;
+	private String description;
+	private UpdateType updateType;
 	private Date lastUpdateDate;
 
-	private FolderLocation location_type;
-
-	public Folder() {
-		System.out.println("Folder");
+	public ConfigLog() {
+		System.out.println("ConfigLog");
 	};
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "folder_id", unique = true, nullable = false)
+	@Column(name = "config_log_id", unique = true, nullable = false)
 	public long getId() {
 		return id;
 	}
@@ -49,7 +47,7 @@ public class Folder implements Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "client_id", nullable = false)
 	public Client getClient() {
 		return client;
@@ -59,14 +57,23 @@ public class Folder implements Serializable {
 		this.client = client;
 	}
 
-	@Lob
-	@Column(name = "path", unique = false, nullable = false, columnDefinition = "TEXT")
-	public String getPath() {
-		return path;
+	@Column(name = "description", unique = false, nullable = false, length = 260)
+	public String getDescription() {
+		return description;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "update_type", unique = false, nullable = false, columnDefinition = "enum('CREATE', 'DELETE', 'UPDATE', 'ENABLE', 'DISABLE')")
+	public UpdateType getUpdateType() {
+		return updateType;
+	}
+
+	public void setUpdateType(UpdateType updateType) {
+		this.updateType = updateType;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -77,16 +84,6 @@ public class Folder implements Serializable {
 
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
-	}
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "location_type", unique = false, nullable = false, columnDefinition = "enum('SOURCE', 'DESTINATION')")
-	public FolderLocation getLocation_type() {
-		return location_type;
-	}
-
-	public void setLocation_type(FolderLocation location_type) {
-		this.location_type = location_type;
 	}
 
 	@Override
