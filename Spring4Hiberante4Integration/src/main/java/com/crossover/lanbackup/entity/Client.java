@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +27,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class Client implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private int id;
 	private String ipAddress;
 
@@ -37,14 +38,16 @@ public class Client implements Serializable {
 	private String dstPassword;
 
 	private boolean enabled;
-	
+
 	private Date createDate;
 	private Date lastUpdateDate;
-	
+
 	private Set<Folder> folders = new HashSet<Folder>();
 	private List<ConfigLog> configLogs = new ArrayList<ConfigLog>();
-	
-	public Client() {};
+
+	public Client() {
+		System.out.println("Client");
+	};
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -101,7 +104,7 @@ public class Client implements Serializable {
 	public void setDstPassword(String dstPassword) {
 		this.dstPassword = dstPassword;
 	}
-	
+
 	@Column(name = "enabled", unique = false, nullable = false)
 	public boolean isEnabled() {
 		return enabled;
@@ -110,8 +113,8 @@ public class Client implements Serializable {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client")
 	public Set<Folder> getFolders() {
 		return folders;
 	}
@@ -120,7 +123,7 @@ public class Client implements Serializable {
 		this.folders = folders;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client")
 	public List<ConfigLog> getConfigLogs() {
 		return configLogs;
 	}
@@ -151,7 +154,8 @@ public class Client implements Serializable {
 
 	@Override
 	public String toString() {
-		return ReflectionToStringBuilder.toString(this, ToStringStyle.DEFAULT_STYLE);
+		return "";
+		//return ReflectionToStringBuilder.toString(this, ToStringStyle.DEFAULT_STYLE);
 	}
 
 }

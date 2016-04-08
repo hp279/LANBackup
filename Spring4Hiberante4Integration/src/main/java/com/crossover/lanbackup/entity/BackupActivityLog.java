@@ -25,15 +25,17 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class BackupActivityLog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private long id;
 	private Folder folder;
 	private String description;
 	private Date activityDate;
 	private ActivityResult activityResult;
 	private Date lastUpdateDate;
-	
-	public BackupActivityLog() {};
+
+	public BackupActivityLog() {
+		System.out.println("BackupActivityLog");
+	};
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +57,7 @@ public class BackupActivityLog implements Serializable {
 	public void setFolder(Folder folder) {
 		this.folder = folder;
 	}
-	
+
 	@Column(name = "description", unique = false, nullable = false, length = 260)
 	public String getDescription() {
 		return description;
@@ -76,8 +78,7 @@ public class BackupActivityLog implements Serializable {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "activity_result", unique = false, nullable = false, 
-	columnDefinition = "enum('SUCCESS', 'FAILURE')")
+	@Column(name = "activity_result", unique = false, nullable = false, columnDefinition = "enum('SUCCESS', 'FAILURE')")
 	public ActivityResult getActivityResult() {
 		return activityResult;
 	}

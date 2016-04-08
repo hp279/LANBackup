@@ -25,15 +25,16 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class ConfigLog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private long id;
 	private Client client;
 	private String description;
 	private UpdateType updateType;
 	private Date lastUpdateDate;
 
-	
-	public ConfigLog() {};
+	public ConfigLog() {
+		System.out.println("ConfigLog");
+	};
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +56,7 @@ public class ConfigLog implements Serializable {
 	public void setClient(Client client) {
 		this.client = client;
 	}
-	
+
 	@Column(name = "description", unique = false, nullable = false, length = 260)
 	public String getDescription() {
 		return description;
@@ -64,10 +65,9 @@ public class ConfigLog implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name = "update_type", unique = false, nullable = false, 
-	columnDefinition = "enum('CREATE', 'DELETE', 'UPDATE', 'ENABLE', 'DISABLE')")
+	@Column(name = "update_type", unique = false, nullable = false, columnDefinition = "enum('CREATE', 'DELETE', 'UPDATE', 'ENABLE', 'DISABLE')")
 	public UpdateType getUpdateType() {
 		return updateType;
 	}

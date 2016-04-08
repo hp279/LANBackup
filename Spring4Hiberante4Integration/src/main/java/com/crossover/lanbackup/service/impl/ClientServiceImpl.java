@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.crossover.lanbackup.dao.ClientDao;
 import com.crossover.lanbackup.entity.Client;
+import com.crossover.lanbackup.repository.ClientDaoRepository;
 import com.crossover.lanbackup.service.ClientService;
 
 
@@ -24,31 +24,31 @@ public class ClientServiceImpl implements ClientService {
 	}
 	
     @Autowired
-    private ClientDao clientDao;
+    private ClientDaoRepository repository;
 
 	@Override
-	public int create(Client Client) {
-		 return clientDao.create(Client);
+	public Client save(Client client) {
+		 return repository.save(client);
 	}
 
 	@Override
 	public Client update(Client client) {
-		return clientDao.update(client);
+		return repository.save(client);
 	}
 
 	@Override
 	public void delete(int id) {
-		clientDao.delete(id);
+		repository.delete(id);
 	}
 
 	@Override
 	public List<Client> getAll() {
-		return clientDao.getAll(); 
+		return (List<Client>) repository.findAll(); 
 	}
 
 	@Override
 	public Client get(int id) {
-		return clientDao.get(id); 
+		return repository.findOne(id); 
 	}
 
    

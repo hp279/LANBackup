@@ -13,8 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import com.crossover.lanbackup.dao.ClientDao;
 import com.crossover.lanbackup.entity.Client;
+import com.crossover.lanbackup.repository.ClientDaoRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:application-context.xml")
@@ -22,12 +22,12 @@ import com.crossover.lanbackup.entity.Client;
 public class ClientDaoImplTest {
 
 	@Autowired
-	private ClientDao clientDao;
+	private ClientDaoRepository clientDao;
 
 	@Transactional
 	@Test
 	public void testGetClientById() {
-		Client client = clientDao.get(1);
+		Client client = clientDao.findOne(1);
 		assertNotNull(client);
 	}
 
@@ -41,12 +41,13 @@ public class ClientDaoImplTest {
 		client.setIpAddress("195.195.34.34");
 		client.setDstLogin("dst_login");
 		client.setDstPassword("dst_password");
-		client.setDstPassword("src_password");
+		client.setSrcLogin("src_login");
+		client.setSrcPassword("src_password");
 		client.setEnabled(true);
 		client.setLastUpdateDate(now);
 
-		int clientId = clientDao.create(client);
+		client = clientDao.save(client);
 
-		assertEquals(2, clientId);
+		assertEquals(2, client.getId());
 	}
 }
