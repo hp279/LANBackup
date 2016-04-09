@@ -3,6 +3,7 @@ package com.crossover.lanbackup.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -32,6 +33,7 @@ public class ClientDTO implements Serializable {
         System.out.println("ClientDTO");
     };
 
+    @XmlElement(name="id")
     public int getId() {
         return id;
     }
@@ -40,6 +42,7 @@ public class ClientDTO implements Serializable {
         this.id = id;
     }
 
+    @XmlElement(name="ip_address")
     public String getIpAddress() {
         return ipAddress;
     }
@@ -48,6 +51,7 @@ public class ClientDTO implements Serializable {
         this.ipAddress = ipAddress;
     }
 
+    @XmlElement(name="scr_login")
     public String getSrcLogin() {
         return srcLogin;
     }
@@ -56,6 +60,7 @@ public class ClientDTO implements Serializable {
         this.srcLogin = srcLogin;
     }
 
+    @XmlElement(name="scr_password")
     public String getSrcPassword() {
         return srcPassword;
     }
@@ -64,6 +69,7 @@ public class ClientDTO implements Serializable {
         this.srcPassword = srcPassword;
     }
 
+    @XmlElement(name="dst_login")
     public String getDstLogin() {
         return dstLogin;
     }
@@ -72,6 +78,7 @@ public class ClientDTO implements Serializable {
         this.dstLogin = dstLogin;
     }
 
+    @XmlElement(name="dst_password")
     public String getDstPassword() {
         return dstPassword;
     }
@@ -80,6 +87,7 @@ public class ClientDTO implements Serializable {
         this.dstPassword = dstPassword;
     }
 
+    @XmlElement(name="enabled")
     public boolean isEnabled() {
         return enabled;
     }
@@ -88,6 +96,7 @@ public class ClientDTO implements Serializable {
         this.enabled = enabled;
     }
 
+    @XmlElement(name="create_date")
     public Date getCreateDate() {
         return createDate;
     }
@@ -96,6 +105,7 @@ public class ClientDTO implements Serializable {
         this.createDate = createDate;
     }
 
+    @XmlElement(name="last_update_date")
     public Date getLastUpdateDate() {
         return lastUpdateDate;
     }

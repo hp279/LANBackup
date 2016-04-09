@@ -2,6 +2,7 @@ package com.crossover.lanbackup.rest.exception;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "error")
@@ -21,6 +22,7 @@ public class Error implements Serializable {
         this.errorMessage = errorMessage;
     }
 
+    @XmlElement(name="status_code")
     public int getStatusCode() {
         return statusCode;
     }
@@ -29,6 +31,7 @@ public class Error implements Serializable {
         this.statusCode = statusCode;
     }
 
+    @XmlElement(name="status_description")
     public String getStatusDescription() {
         return statusDescription;
     }
@@ -37,6 +40,7 @@ public class Error implements Serializable {
         this.statusDescription = statusDescription;
     }
 
+    @XmlElement(name="message")
     public String getErrorMessage() {
         return errorMessage;
     }

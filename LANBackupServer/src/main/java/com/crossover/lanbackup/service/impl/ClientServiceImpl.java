@@ -20,6 +20,7 @@ import com.crossover.lanbackup.service.ClientService;
 public class ClientServiceImpl implements ClientService {
 
     protected final Log logger = LogFactory.getLog(getClass());
+    protected final ModelMapper modelMapper = new ModelMapper();
 
     public ClientServiceImpl() {
         System.out.println("ClientServiceImpl()");
@@ -46,8 +47,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<ClientDTO> getAll() {
         List<Client> entityList = (List<Client>) clientDaoRepository.findAll();
-        ModelMapper modelMapper = new ModelMapper();
-
+     
         List<ClientDTO> dtoList = new ArrayList<ClientDTO>();
 
         for (Client entity : entityList) {
@@ -59,8 +59,42 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client get(int id) {
-        return clientDaoRepository.findOne(id);
+    public ClientDTO get(int id) {
+        ClientDTO dto = null;
+        Client entity = clientDaoRepository.findOne(id);
+        if (entity != null) {
+            dto = modelMapper.map(entity, ClientDTO.class);
+        } 
+        return dto;
     }
+
+
+    @Override
+    public ClientDTO enable(int id) {
+        ClientDTO dto = null;
+        Client entity = clientDaoRepository.findOne(id);
+        if (entity != null) {
+            entity.setEnabled(true);
+            entity = clientDaoRepository.save(entity);
+            dto = modelMapper.map(entity, ClientDTO.class);  
+        } 
+        
+        return dto;
+    }
+
+    @Override
+    public ClientDTO disable(int id) {
+        ClientDTO dto = null;
+        Client entity = clientDaoRepository.findOne(id);
+        if (entity != null) {
+            entity.setEnabled(false);
+            entity = clientDaoRepository.save(entity);
+            dto = modelMapper.map(entity, ClientDTO.class);  
+        } 
+        
+        return dto;
+    }
+    
+    
 
 }

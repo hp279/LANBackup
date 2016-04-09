@@ -22,6 +22,7 @@
         'app.directives',
         'app.constants',
         'app.filters',
+        'app.services',
         'app.backup-configuration',
         'app.activity-logs'
       ]);

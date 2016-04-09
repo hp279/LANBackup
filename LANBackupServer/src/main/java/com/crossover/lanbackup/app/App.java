@@ -36,21 +36,22 @@ public class App {
 
         clientDao.deleteAll();
 
-        Client client = new Client();
-        Date now = new Date();
-        client.setCreateDate(now);
+        for (int i = 0; i < 10; i++) {
+            Client client = new Client();
+            Date now = new Date();
+            client.setCreateDate(now);
 
-        client.setIpAddress("195.195.34.34");
-        client.setDstLogin("dst_login");
-        client.setDstPassword("dst_password");
-        client.setSrcLogin("src_login");
-        client.setSrcPassword("src_password");
-        client.setEnabled(true);
-        client.setLastUpdateDate(now);
+            client.setIpAddress("195.195.34.00" + i);
+            client.setDstLogin("dst_login");
+            client.setDstPassword("dst_password");
+            client.setSrcLogin("src_login");
+            client.setSrcPassword("src_password");
+            client.setEnabled(true);
+            client.setLastUpdateDate(now);
 
-        client = clientService.save(client);
-
-        System.out.println("ClientDTO::" + client);
+            client = clientService.save(client);
+            System.out.println("ClientDTO::" + client);
+        }
 
         List<Client> clients = (List<Client>) clientDao.findAll();
 

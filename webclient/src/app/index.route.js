@@ -18,7 +18,7 @@
         url: '/',
         views: {
           'main': {
-            templateUrl: 'app/main/body.html',
+            templateUrl: 'app/states/main/body.html',
             controller: 'MainController',
             controllerAs: 'ctrl'
           }
@@ -28,7 +28,7 @@
         url: '/backup-configuration',
         views: {
           'main': {
-            templateUrl: 'app/backup-configuration/body.html',
+            templateUrl: 'app/states/backup-configuration/body.html',
             controller: 'BackupConfigurationController',
             controllerAs: 'ctrl'
           }
@@ -43,7 +43,7 @@
         url: '/activity-logs',
         views: {
           'main': {
-            templateUrl: 'app/activity-logs/body.html',
+            templateUrl: 'app/states/activity-logs/body.html',
             controller: 'ActivityLogsController',
             controllerAs: 'ctrl'
           }

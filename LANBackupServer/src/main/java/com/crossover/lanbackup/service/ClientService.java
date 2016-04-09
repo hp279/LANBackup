@@ -11,5 +11,7 @@ public interface ClientService {
     public Client update(Client client);
     public void delete(int id);
     public List<ClientDTO> getAll();
-    public Client get(int id);	
+    public ClientDTO get(int id);	
+    public ClientDTO enable(int id);
+    public ClientDTO disable(int id);
 }

@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -39,12 +40,27 @@ public class ClientRestService {
 	    List<ClientDTO> clientDTOList = clientService.getAll();
 		return Response.status(Status.OK).entity(new GenericEntity<List<ClientDTO>>(clientDTOList) {}).build();
 	}
-
-	/*@GET
-	public Response getClient() {
-		String output = "ClientDTO service";
-		return Response.status(200).entity(output).build();
-	}*/
+	
+	@GET
+	@Path("/{id}")
+    public Response getClient(@PathParam("id") Integer id) {
+	    ClientDTO clientDTO = clientService.get(id);
+	    return Response.status(clientDTO != null ? Status.OK : Status.NOT_FOUND).entity(clientDTO).build();
+    }
+	
+	@POST
+	@Path("/{id}/enable")
+    public Response enableClient(@PathParam("id") Integer id) {
+	    ClientDTO clientDTO = clientService.enable(id);
+        return Response.status(clientDTO != null ? Status.OK : Status.NOT_FOUND).entity(clientDTO).build();
+    }
+	
+	@POST
+    @Path("/{id}/disable")
+    public Response disableClient(@PathParam("id") Integer id) {
+	    ClientDTO clientDTO = clientService.disable(id);
+        return Response.status(clientDTO != null ? Status.OK : Status.NOT_FOUND).entity(clientDTO).build();
+    }
 
 	@POST
 	public Response createClient() {
@@ -59,9 +75,10 @@ public class ClientRestService {
 	}
 
 	@DELETE
-	public Response deleteClient() {
-		String output = "ClientDTO service";
-		return Response.status(200).entity(output).build();
+	@Path("/{id}")
+	public Response deleteClient(@PathParam("id") Integer id) {
+	    clientService.delete(id);
+		return Response.status(Status.OK).build();
 	}
 
 }
