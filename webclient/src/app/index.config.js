@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('webclient')
+    .module('app')
     .config(config);
 
   /** @ngInject */

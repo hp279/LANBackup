@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('webclient')
+    .module('app.components')
     .directive('acmeNavbar', acmeNavbar);
 
   /** @ngInject */

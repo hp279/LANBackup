@@ -34,7 +34,7 @@ public class BackupActivityLog implements Serializable {
 	private Date lastUpdateDate;
 
 	public BackupActivityLog() {
-		System.out.println("BackupActivityLog");
+		System.out.println("BackupActivityLogDTO");
 	};
 
 	@Id

@@ -33,7 +33,7 @@ public class ConfigLog implements Serializable {
 	private Date lastUpdateDate;
 
 	public ConfigLog() {
-		System.out.println("ConfigLog");
+		System.out.println("ConfigLogDTO");
 	};
 
 	@Id

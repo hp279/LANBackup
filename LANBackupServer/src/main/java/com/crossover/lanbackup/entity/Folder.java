@@ -35,7 +35,7 @@ public class Folder implements Serializable {
 	private FolderLocation location_type;
 
 	public Folder() {
-		System.out.println("Folder");
+		System.out.println("FolderDTO");
 	};
 
 	@Id

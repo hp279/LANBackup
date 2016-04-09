@@ -46,7 +46,7 @@ public class Client implements Serializable {
 	private List<ConfigLog> configLogs = new ArrayList<ConfigLog>();
 
 	public Client() {
-		System.out.println("Client");
+		System.out.println("ClientDTO");
 	};
 
 	@Id

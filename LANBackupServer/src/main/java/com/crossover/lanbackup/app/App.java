@@ -9,51 +9,57 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.crossover.lanbackup.entity.Client;
 import com.crossover.lanbackup.repository.ClientDaoRepository;
+import com.crossover.lanbackup.service.ClientService;
 
 public class App {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-	//	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+        // ClassPathXmlApplicationContext context = new
+        // ClassPathXmlApplicationContext("application-context.xml");
 
-	new App().test();
+        new App().test();
 
-	
-	}
-	
-	public void test() {
-		
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("application-context.xml");
-		System.out.println(Arrays.asList(ctx.getBeanDefinitionNames()));
-		
-		ClientDaoRepository clientDao = (ClientDaoRepository) ctx.getBean("clientDaoRepository");
-		
-		clientDao.deleteAll();
-		
-		Client client = new Client();
-		Date now = new Date();
-		client.setCreateDate(now);
+    }
 
-		client.setIpAddress("195.195.34.34");
-		client.setDstLogin("dst_login");
-		client.setDstPassword("dst_password");
-		client.setSrcLogin("src_login");
-		client.setSrcPassword("src_password");
-		client.setEnabled(true);
-		client.setLastUpdateDate(now);
+    public void test() {
 
-		client = clientDao.save(client);
+        ApplicationContext ctx = new ClassPathXmlApplicationContext(
+                "application-context.xml");
+        System.out.println(Arrays.asList(ctx.getBeanDefinitionNames()));
 
-		System.out.println("Client::" + client);
+        ClientDaoRepository clientDao = (ClientDaoRepository) ctx
+                .getBean("clientDaoRepository");
+        
+        ClientService clientService = (ClientService) ctx
+                .getBean("clientService");
 
-		List<Client> clients = (List<Client>) clientDao.findAll();
+        clientDao.deleteAll();
 
-		for (Client c : clients) {
-			System.out.println("Client from list ::" + c);
-		}
-		
-		clientDao.delete(client);
-		// close resources
-	//	context.close();
-	}
+        Client client = new Client();
+        Date now = new Date();
+        client.setCreateDate(now);
+
+        client.setIpAddress("195.195.34.34");
+        client.setDstLogin("dst_login");
+        client.setDstPassword("dst_password");
+        client.setSrcLogin("src_login");
+        client.setSrcPassword("src_password");
+        client.setEnabled(true);
+        client.setLastUpdateDate(now);
+
+        client = clientService.save(client);
+
+        System.out.println("ClientDTO::" + client);
+
+        List<Client> clients = (List<Client>) clientDao.findAll();
+
+        for (Client c : clients) {
+            System.out.println("ClientDTO from list ::" + c);
+        }
+
+     //   clientDao.delete(client);
+        // close resources
+        // context.close();
+    }
 }
