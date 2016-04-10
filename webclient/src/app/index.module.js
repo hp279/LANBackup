@@ -15,14 +15,13 @@
         'ui.bootstrap',
         'toastr',
         'angular.filter',
-        'infinite-scroll',
 
-        'app.components',
         'app.dataservices',
         'app.directives',
         'app.constants',
         'app.filters',
         'app.services',
+        'app.authentication',
         'app.backup-configuration',
         'app.activity-logs'
       ]);

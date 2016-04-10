@@ -31,7 +31,6 @@ public class BackupActivityLog implements Serializable {
 	private String description;
 	private Date activityDate;
 	private ActivityResult activityResult;
-	private Date lastUpdateDate;
 
 	public BackupActivityLog() {
 		System.out.println("BackupActivityLogDTO");
@@ -85,16 +84,6 @@ public class BackupActivityLog implements Serializable {
 
 	public void setActivityResult(ActivityResult activityResult) {
 		this.activityResult = activityResult;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "last_update", unique = false, nullable = false)
-	public Date getLastUpdateDate() {
-		return lastUpdateDate;
-	}
-
-	public void setLastUpdateDate(Date lastUpdateDate) {
-		this.lastUpdateDate = lastUpdateDate;
 	}
 
 	@Override

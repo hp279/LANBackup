@@ -6,7 +6,10 @@
 	<display-name>LAN Backup Application</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:application-context.xml</param-value>
+		<param-value>
+			classpath:application-context.xml
+			classpath:security-context.xml
+		</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -32,4 +35,15 @@
 		<servlet-name>jersey-serlvet</servlet-name>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
+
+	<!--Hook into spring security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/api/*</url-pattern>
+	</filter-mapping>
 </web-app>

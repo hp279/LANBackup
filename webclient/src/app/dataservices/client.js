@@ -8,7 +8,7 @@
   /** @ngInject */
   function Client($resource) {
     var resource = $resource(
-      'api/clients/:id',
+      'api/admin/clients/:id',
       {},
       {
         query: {
@@ -32,12 +32,17 @@
           isArray: false
         },
         enable: {
-          url: 'api/clients/:id/enable',
+          url: 'api/admin/clients/:id/enable',
           method: 'POST',
         },
         disable: {
-          url: 'api/clients/:id/disable',
+          url: 'api/admin/clients/:id/disable',
           method: 'POST',
+        },
+        configlog: {
+          url: 'api/admin/clients/:id/configlog',
+          method: 'GET',
+          isArray: true
         }
       })
 

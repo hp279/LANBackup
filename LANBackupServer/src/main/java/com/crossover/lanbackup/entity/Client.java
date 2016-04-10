@@ -43,7 +43,6 @@ public class Client implements Serializable {
 	private Date lastUpdateDate;
 
 	private Set<Folder> folders = new HashSet<Folder>();
-	private List<ConfigLog> configLogs = new ArrayList<ConfigLog>();
 
 	public Client() {
 		System.out.println("ClientDTO");
@@ -121,15 +120,6 @@ public class Client implements Serializable {
 
 	public void setFolders(Set<Folder> folders) {
 		this.folders = folders;
-	}
-
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client")
-	public List<ConfigLog> getConfigLogs() {
-		return configLogs;
-	}
-
-	public void setConfigLogs(List<ConfigLog> configLogs) {
-		this.configLogs = configLogs;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

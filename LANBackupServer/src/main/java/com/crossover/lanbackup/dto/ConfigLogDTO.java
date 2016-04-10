@@ -3,6 +3,7 @@ package com.crossover.lanbackup.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -16,15 +17,16 @@ public class ConfigLogDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private long id;
-    private int clientId;
+    private String clientIpAddress;
     private String description;
     private UpdateType updateType;
-    private Date lastUpdateDate;
+    private Date activityDate;
 
     public ConfigLogDTO() {
         System.out.println("ConfigLogDTO");
     };
 
+    @XmlElement(name="id")
     public long getId() {
         return id;
     }
@@ -33,14 +35,16 @@ public class ConfigLogDTO implements Serializable {
         this.id = id;
     }
 
-    public int getClientId() {
-        return clientId;
+    @XmlElement(name="client_ip_address")
+    public String getClientIpAddress() {
+        return clientIpAddress;
     }
 
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
-    }
+    public void setClientIpAddress(String clientIpAddress) {
+        this.clientIpAddress = clientIpAddress;
+    } 
 
+    @XmlElement(name="description")
     public String getDescription() {
         return description;
     }
@@ -49,6 +53,7 @@ public class ConfigLogDTO implements Serializable {
         this.description = description;
     }
 
+    @XmlElement(name="update_type")
     public UpdateType getUpdateType() {
         return updateType;
     }
@@ -57,12 +62,13 @@ public class ConfigLogDTO implements Serializable {
         this.updateType = updateType;
     }
 
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
+    @XmlElement(name="activity_date")
+    public Date getActivityDate() {
+        return activityDate;
     }
 
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
+    public void setActivityDate(Date activityDate) {
+        this.activityDate = activityDate;
     }
 
     @Override

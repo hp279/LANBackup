@@ -30,6 +30,7 @@ CREATE TABLE `folder` (
   `folder_id` BIGINT NOT NULL AUTO_INCREMENT,
   `client_id` INT(11) NOT NULL,
   `path` TEXT NOT NULL,
+  `backuped` BOOLEAN NOT NULL,
   `location_type` ENUM('SOURCE', 'DESTINATION') NOT NULL, 
   `last_update` TIMESTAMP NOT NULL,
   PRIMARY KEY (`folder_id`)
@@ -38,10 +39,10 @@ CREATE TABLE `folder` (
 
 CREATE TABLE `config_log` (
   `config_log_id` BIGINT NOT NULL AUTO_INCREMENT,
-  `client_id` INT(11) NOT NULL,
+  `client_ip_address` varchar(15) NOT NULL,
   `description` VARCHAR(260) NOT NULL,
   `update_type` ENUM('CREATE', 'DELETE', 'UPDATE', 'ENABLE', 'DISABLE') NOT NULL, 
-  `last_update` TIMESTAMP NOT NULL,
+  `activity_date` TIMESTAMP NOT NULL,
   PRIMARY KEY (`config_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -51,6 +52,5 @@ CREATE TABLE `backup_activity_log` (
   `activity_date` DATETIME NOT NULL,
   `activity_result` ENUM('SUCCESS', 'FAILURE') NOT NULL, 
   `description` VARCHAR(260) NOT NULL,
-  `last_update` TIMESTAMP NOT NULL,
   PRIMARY KEY (`backup_activity_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -27,10 +27,10 @@ public class ConfigLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private long id;
-	private Client client;
+	private String clientIpAddress;
 	private String description;
 	private UpdateType updateType;
-	private Date lastUpdateDate;
+	private Date activityDate;
 
 	public ConfigLog() {
 		System.out.println("ConfigLogDTO");
@@ -46,26 +46,27 @@ public class ConfigLog implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	@Column(name = "client_ip_address", nullable = false, length = 15)
+    public String getClientIpAddress() {
+        return clientIpAddress;
+    }
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "client_id", nullable = false)
-	public Client getClient() {
-		return client;
-	}
+    public void setClientIpAddress(String clientIpAddress) {
+        this.clientIpAddress = clientIpAddress;
+    }
 
-	public void setClient(Client client) {
-		this.client = client;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
 	@Column(name = "description", unique = false, nullable = false, length = 260)
 	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "update_type", unique = false, nullable = false, columnDefinition = "enum('CREATE', 'DELETE', 'UPDATE', 'ENABLE', 'DISABLE')")
 	public UpdateType getUpdateType() {
@@ -77,13 +78,13 @@ public class ConfigLog implements Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "last_update", unique = false, nullable = false)
-	public Date getLastUpdateDate() {
-		return lastUpdateDate;
+	@Column(name = "activity_date", unique = false, nullable = false)
+	public Date getActivityDate() {
+		return activityDate;
 	}
 
-	public void setLastUpdateDate(Date lastUpdateDate) {
-		this.lastUpdateDate = lastUpdateDate;
+	public void setActivityDate(Date activityDate) {
+		this.activityDate = activityDate;
 	}
 
 	@Override

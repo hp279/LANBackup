@@ -50,6 +50,13 @@
         }
       })
 
+      .state('login', {
+        url: '/login',
+        templateUrl: 'app/states/authentication/body.html',
+        controller: 'LoginController',
+        controllerAs: 'ctrl'
+      })
+
     $urlRouterProvider.otherwise('/');
   }
 

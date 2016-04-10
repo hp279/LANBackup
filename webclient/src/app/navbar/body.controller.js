@@ -6,7 +6,13 @@
     .controller('NavBarController', NavBarController);
 
   /** @ngInject */
-  function NavBarController($timeout, toastr) {
+  function NavBarController($timeout, $state, toastr, AuthenticationService) {
     var vm = this;
+
+    vm.logout = function() {
+      AuthenticationService.ClearCredentials();
+      toastr.success("Successfully logout.")
+      $state.go('login');
+    }
   }
 })();
