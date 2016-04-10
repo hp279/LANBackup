@@ -19,105 +19,185 @@ import org.springframework.stereotype.Controller;
 
 import com.crossover.lanbackup.dto.ClientDTO;
 import com.crossover.lanbackup.dto.ConfigLogDTO;
+import com.crossover.lanbackup.dto.FolderDTO;
 import com.crossover.lanbackup.entity.Client;
+import com.crossover.lanbackup.entity.Folder;
+import com.crossover.lanbackup.rest.exception.BusinessException;
 import com.crossover.lanbackup.service.ClientService;
 import com.crossover.lanbackup.service.ConfigLogService;
+import com.crossover.lanbackup.service.FolderService;
 
 @Controller
 @Path("/admin/clients")
 @Produces(MediaType.APPLICATION_JSON)
 public class ClientRestService {
-   
-    @Autowired
-	private ClientService clientService;
 
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private FolderService folderService;
 
     @Autowired
     private ConfigLogService configLogService;
 
-    
-	@GET
-	@Path("/ping")
-	public Response ping() {
-		String output = "ClientDTO service";
-		return Response.status(200).entity(output).build();
-	}
+    @GET
+    @Path("/ping")
+    public Response ping() {
+        String output = "ClientDTO service";
+        return Response.status(Status.OK).entity(output).build();
+    }
 
-	@GET
-	public Response getClients() {
-	    List<ClientDTO> clientDTOList = clientService.toDTO(clientService.getAll());
-		return Response.status(Status.OK).entity(new GenericEntity<List<ClientDTO>>(clientDTOList) {}).build();
-	}
-	
-	@GET
-	@Path("/{id}")
+    @GET
+    public Response getClients() {
+        List<ClientDTO> clientDTOList = clientService
+                .toDTO(clientService.getAll());
+        return Response.status(Status.OK)
+                .entity(new GenericEntity<List<ClientDTO>>(clientDTOList) {
+                }).build();
+    }
+
+    @GET
+    @Path("/{id}")
     public Response getClient(@PathParam("id") Integer id) {
-	    ClientDTO clientDTO = clientService.toDTO(clientService.get(id));
-	    return Response.status(clientDTO != null ? Status.OK : Status.NOT_FOUND).entity(clientDTO).build();
+        ClientDTO clientDTO = clientService.toDTO(clientService.get(id));
+        return Response.status(Status.OK).entity(clientDTO).build();
     }
-	
-	@POST
-	@Path("/{id}/enable")
+
+    @POST
+    @Path("/{id}/enable")
     public Response enableClient(@PathParam("id") Integer id) {
-	    ClientDTO clientDTO = clientService.toDTO(clientService.enable(id));
-        return Response.status(clientDTO != null ? Status.OK : Status.NOT_FOUND).entity(clientDTO).build();
+        Client client = clientService.enable(id);
+        
+        if (client == null) {
+            throw new BusinessException("Client with id " + id + " not found");
+        }
+        
+        ClientDTO clientDTO = clientService.toDTO(client);
+        return Response.status(Status.OK).entity(clientDTO).build();
     }
-	
-	@POST
+
+    @POST
     @Path("/{id}/disable")
     public Response disableClient(@PathParam("id") Integer id) {
-	    ClientDTO clientDTO = clientService.toDTO(clientService.disable(id));
-        return Response.status(clientDTO != null ? Status.OK : Status.NOT_FOUND).entity(clientDTO).build();
+        Client client = clientService.disable(id);
+        
+        if (client == null) {
+            throw new BusinessException("Client with id " + id + " not found");
+        }
+        
+        ClientDTO clientDTO = clientService.toDTO(client);
+        return Response.status(Status.OK).entity(clientDTO).build();
     }
 
-	@POST
-	public Response createClient() {
-		String output = "ClientDTO service";
-		return Response.status(200).entity(output).build();
-	}
+    @POST
+    public Response createClient(ClientDTO clientDTO) {
+        Client client = clientService.fromDTO(clientDTO);
+        client = clientService.save(client);
+        return Response.status(Status.OK).entity(clientService.toDTO(client)).build();
+    }
 
-	@PUT
-	public Response updateClient() {
-		String output = "ClientDTO service";
-		return Response.status(200).entity(output).build();
-	}
+    @PUT
+    @Path("/{id}")
+    public Response updateClient(@PathParam("id") Integer id, ClientDTO clientDTO) {
+        Client client = clientService.disable(id);
+        
+        if (client == null) {
+            throw new BusinessException("Client with id " + id + " not found");
+        }
+        
+        if (clientDTO.getId() != id.intValue()) {
+            throw new BusinessException("Id mismathced");
+        }
+        
+        client = clientService.fromDTO(clientDTO);
+        client = clientService.save(client);
+        
+        return Response.status(Status.OK).entity(clientService.toDTO(client)).build();
+    }
 
-	@DELETE
-	@Path("/{id}")
-	public Response deleteClient(@PathParam("id") Integer id) {
-	    clientService.delete(id);
-		return Response.status(Status.OK).build();
-	}
-	
-	@GET
+    @DELETE
+    @Path("/{id}")
+    public Response deleteClient(@PathParam("id") Integer id) {
+        Client client = clientService.get(id);
+        
+        if (client == null) {
+            throw new BusinessException("Client with id " + id + " not found");
+        }
+        
+        clientService.delete(id);
+        return Response.status(Status.OK).build();
+    }
+
+    @GET
     @Path("/{id}/configlog")
     public Response getConfigLogForClient(@PathParam("id") Integer id) {
-	    Client client = clientService.get(id);
+        Client client = clientService.get(id);
+        
+        if (client == null) {
+            throw new BusinessException("Client with id " + id + " not found");
+        }
+        
         List<ConfigLogDTO> configLogDTOList = configLogService.toDTO(
                 configLogService.getByClientIpAddress(client.getIpAddress()));
-        return Response.status(configLogDTOList != null ? Status.OK : Status.NOT_FOUND).entity(
-                new GenericEntity<List<ConfigLogDTO>>(configLogDTOList) {}).build();
+        
+        return Response.status(Status.OK).entity(
+                new GenericEntity<List<ConfigLogDTO>>(configLogDTOList) {
+                }).build();
     }
-	
-	@GET
+
+    @GET
     @Path("/configlog")
     public Response getConfigLog() {
-        List<ConfigLogDTO> configLogDTOList = configLogService.toDTO(configLogService.getAll());
-        return Response.status(configLogDTOList != null ? Status.OK : Status.NOT_FOUND).entity(
-                new GenericEntity<List<ConfigLogDTO>>(configLogDTOList) {}).build();
+        List<ConfigLogDTO> configLogDTOList = configLogService
+                .toDTO(configLogService.getAll());
+        
+        return Response.status(Status.OK).entity(
+                new GenericEntity<List<ConfigLogDTO>>(configLogDTOList) {
+                }).build();
     }
-	
-/*	@POST
-    @Path("/updateFolders")
-    public Response updateFolders(@Context HttpServletRequest request, @Context SecurityContext context) {
-	    String ip = request.getRemoteAddr();
-	    //If security is enabled
-	    Principal principal = context.getUserPrincipal();
-	    String userName = principal.getName();
-	    
-	    return Response.status(Status.OK).entity(ip).build();
-      //  ClientDTO clientDTO = clientService.disable(id);
-       // return Response.status(clientDTO != null ? Status.OK : Status.NOT_FOUND).entity(clientDTO).build();
-    }*/
+
+    @GET
+    @Path("/{id}/folders")
+    public Response getFoldersForClient(@PathParam("id") Integer id) {
+        Client client = clientService.get(id);
+
+        if (client == null) {
+            throw new BusinessException("Client with id " + id + " not found");
+        }
+
+        List<Folder> folders = folderService.getAllForClient(client);
+        List<FolderDTO> folderDTOList = folderService.toDTO(folders);
+        return Response.status(Status.OK)
+                .entity(new GenericEntity<List<FolderDTO>>(folderDTOList) {
+                }).build();
+    }
+
+    @POST
+    @Path("/{id}/folders")
+    public Response updatedFoldersForClient(@PathParam("id") Integer id,
+            String folderIds) {
+        Client client = clientService.get(id);
+
+        if (client == null) {
+            throw new BusinessException("Client with id " + id + " not found");
+        }
+
+        try {
+            String[] folderIdStrings = folderIds.split(",");
+            Long[] folderIdLongs = new Long[folderIdStrings.length];
+            for (int i = 0; i < folderIdStrings.length; i++) {
+                String folderIdString = folderIdStrings[i];
+                folderIdLongs[i] = Long.parseLong(folderIdString);
+            }
+
+            folderService.updatedFoldersForClient(client, folderIdLongs);
+
+            return Response.status(Status.OK).build();
+        } catch (Exception e) {
+            throw new BusinessException("Bad folderIds param");
+        }
+
+    }
 
 }

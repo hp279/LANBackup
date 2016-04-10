@@ -42,7 +42,7 @@ public class Client implements Serializable {
 	private Date createDate;
 	private Date lastUpdateDate;
 
-	private Set<Folder> folders = new HashSet<Folder>();
+	private List<Folder> folders = new ArrayList<Folder>();
 
 	public Client() {
 		System.out.println("ClientDTO");
@@ -113,12 +113,12 @@ public class Client implements Serializable {
 		this.enabled = enabled;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client")
-	public Set<Folder> getFolders() {
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "client")
+	public List<Folder> getFolders() {
 		return folders;
 	}
 
-	public void setFolders(Set<Folder> folders) {
+	public void setFolders(List<Folder> folders) {
 		this.folders = folders;
 	}
 

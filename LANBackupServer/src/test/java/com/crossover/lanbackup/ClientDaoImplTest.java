@@ -23,6 +23,16 @@ public class ClientDaoImplTest {
 
 	@Autowired
 	private ClientDaoRepository clientDao;
+	
+	@Test
+    @Transactional
+    public void testAddClient() {
+        DepartmentEntity department = new DepartmentEntity("Information Technology");
+        departmentDAO.addDepartment(department);
+         
+        List<DepartmentEntity> departments = departmentDAO.getAllDepartments();
+        Assert.assertEquals(department.getName(), departments.get(0).getName());
+    }
 
 	@Transactional
 	@Test

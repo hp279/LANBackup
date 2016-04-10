@@ -30,6 +30,7 @@ public class Folder implements Serializable {
 	private long id;
 	private Client client;
 	private String path;
+	private boolean backuped;
 	private Date lastUpdateDate;
 
 	private FolderLocation location_type;
@@ -68,8 +69,17 @@ public class Folder implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	
+	@Column(name = "backuped", unique = false, nullable = false)
+	public boolean isBackuped() {
+        return backuped;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
+    public void setBackuped(boolean backuped) {
+        this.backuped = backuped;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "last_update", unique = false, nullable = false)
 	public Date getLastUpdateDate() {
 		return lastUpdateDate;

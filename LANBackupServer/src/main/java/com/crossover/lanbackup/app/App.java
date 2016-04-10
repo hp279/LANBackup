@@ -36,16 +36,33 @@ public class App {
 
         clientDao.deleteAll();
 
+        
+
+        Client client = new Client();
+        Date now = new Date();
+        client.setCreateDate(now);
+
+        client.setIpAddress("127.0.0.1");
+        client.setDstLogin("local_login");
+        client.setDstPassword("local_password");
+        client.setSrcLogin("local_login");
+        client.setSrcPassword("local_password");
+        client.setEnabled(true);
+        client.setLastUpdateDate(now);
+
+        client = clientService.save(client);
+        System.out.println("ClientDTO::" + client);
+        
         for (int i = 0; i < 10; i++) {
-            Client client = new Client();
-            Date now = new Date();
+            client = new Client();
+            now = new Date();
             client.setCreateDate(now);
 
             client.setIpAddress("195.195.34.00" + i);
-            client.setDstLogin("dst_login");
-            client.setDstPassword("dst_password");
-            client.setSrcLogin("src_login");
-            client.setSrcPassword("src_password");
+            client.setDstLogin("dst_login" + i);
+            client.setDstPassword("dst_password" + i);
+            client.setSrcLogin("src_login" + i);
+            client.setSrcPassword("src_password" + i);
             client.setEnabled(true);
             client.setLastUpdateDate(now);
 

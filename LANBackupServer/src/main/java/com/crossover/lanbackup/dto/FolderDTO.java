@@ -3,6 +3,7 @@ package com.crossover.lanbackup.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -18,6 +19,7 @@ public class FolderDTO implements Serializable {
     private long id;
     private int clientId;
     private String path;
+    private boolean backuped;
     private Date lastUpdateDate;
 
     private FolderLocation location_type;
@@ -26,6 +28,7 @@ public class FolderDTO implements Serializable {
         System.out.println("FolderDTO");
     };
 
+    @XmlElement(name="id")
     public long getId() {
         return id;
     }
@@ -34,6 +37,7 @@ public class FolderDTO implements Serializable {
         this.id = id;
     }
 
+    @XmlElement(name="client_id")
     public int getClientId() {
         return clientId;
     }
@@ -42,6 +46,7 @@ public class FolderDTO implements Serializable {
         this.clientId = clientId;
     }
 
+    @XmlElement(name="path")
     public String getPath() {
         return path;
     }
@@ -50,6 +55,16 @@ public class FolderDTO implements Serializable {
         this.path = path;
     }
 
+    @XmlElement(name="backuped")
+    public boolean isBackuped() {
+        return backuped;
+    }
+
+    public void setBackuped(boolean backuped) {
+        this.backuped = backuped;
+    }
+
+    @XmlElement(name="last_update")
     public Date getLastUpdateDate() {
         return lastUpdateDate;
     }
@@ -58,6 +73,7 @@ public class FolderDTO implements Serializable {
         this.lastUpdateDate = lastUpdateDate;
     }
 
+    @XmlElement(name="location_type")
     public FolderLocation getLocation_type() {
         return location_type;
     }

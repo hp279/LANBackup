@@ -21,9 +21,13 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
     }
 
     private Response.StatusType getStatusType(Throwable ex) {
-        if (ex instanceof WebApplicationException) {
+        if (ex instanceof BusinessException) {
+            return Response.Status.BAD_REQUEST;
+        } else if (ex instanceof WebApplicationException) {
             return Response.Status.fromStatusCode(
                     ((WebApplicationException) ex).getResponse().getStatus());
+        } else if (ex instanceof BusinessException) {
+            return Response.Status.BAD_REQUEST;
         } else {
             return Response.Status.INTERNAL_SERVER_ERROR;
         }

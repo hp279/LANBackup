@@ -43,7 +43,17 @@
           url: 'api/admin/clients/:id/configlog',
           method: 'GET',
           isArray: true
-        }
+        },
+        folders: {
+          url: 'api/admin/clients/:id/folders',
+          method: 'GET',
+          isArray: true
+        },
+        updateFolders:  {
+          url: 'api/admin/clients/:id/folders',
+          method: 'POST',
+          isArray: false
+        },
       })
 
     return resource;

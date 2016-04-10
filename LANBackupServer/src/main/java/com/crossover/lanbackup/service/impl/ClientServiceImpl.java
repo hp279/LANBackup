@@ -18,6 +18,7 @@ import com.crossover.lanbackup.entity.UpdateType;
 import com.crossover.lanbackup.repository.ClientDaoRepository;
 import com.crossover.lanbackup.service.ClientService;
 import com.crossover.lanbackup.service.ConfigLogService;
+import com.crossover.lanbackup.validator.IPAddressValidator;
 
 @Service("clientService")
 @Transactional
@@ -35,9 +36,22 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private ConfigLogService configLogService;
+    
+    @Autowired
+    private IPAddressValidator ipAddressValidator;
 
     @Override
     public Client save(Client entity) {
+        if (!ipAddressValidator.validate(entity.getIpAddress())) {
+            throw new IllegalArgumentException("Bad IP address");
+        }
+        
+        if (entity.getCreateDate() == null) {
+            entity.setCreateDate(new Date());
+        }
+        
+        entity.setLastUpdateDate(new Date());
+
         Client newClient = clientDaoRepository.save(entity);
 
         ConfigLog configLog = new ConfigLog();
@@ -81,7 +95,6 @@ public class ClientServiceImpl implements ClientService {
         configLog.setActivityDate(new Date());
 
         configLogService.save(configLog);
-
     }
 
     @Override
@@ -132,6 +145,11 @@ public class ClientServiceImpl implements ClientService {
 
         return entity;
     }
+    
+    @Override
+    public Client getByIpAddress(String ipAddress) {
+        return clientDaoRepository.getByIpAddress(ipAddress);
+    }
 
     @Override
     public ClientDTO toDTO(Client entity) {
@@ -150,4 +168,21 @@ public class ClientServiceImpl implements ClientService {
         return dtoList;
     }
 
+    @Override
+    public Client fromDTO(ClientDTO dto) {
+        return modelMapper.map(dto, Client.class);
+    }
+
+    @Override
+    public List<Client> fromDTO(List<ClientDTO> dtoList) {
+        List<Client> entityList = new ArrayList<Client>();
+
+        for (ClientDTO dto : dtoList) {
+            Client entity = modelMapper.map(dto, Client.class);
+            entityList.add(entity);
+        }
+
+        return entityList;
+    }    
+    
 }

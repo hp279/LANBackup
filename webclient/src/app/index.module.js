@@ -15,8 +15,8 @@
         'ui.bootstrap',
         'toastr',
         'angular.filter',
-
         'app.dataservices',
+
         'app.directives',
         'app.constants',
         'app.filters',

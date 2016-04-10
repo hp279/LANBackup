@@ -51,7 +51,7 @@ public class ClientDTO implements Serializable {
         this.ipAddress = ipAddress;
     }
 
-    @XmlElement(name="scr_login")
+    @XmlElement(name="src_login")
     public String getSrcLogin() {
         return srcLogin;
     }
@@ -60,7 +60,7 @@ public class ClientDTO implements Serializable {
         this.srcLogin = srcLogin;
     }
 
-    @XmlElement(name="scr_password")
+    @XmlElement(name="src_password")
     public String getSrcPassword() {
         return srcPassword;
     }

@@ -41,7 +41,7 @@ CREATE TABLE `config_log` (
   `config_log_id` BIGINT NOT NULL AUTO_INCREMENT,
   `client_ip_address` varchar(15) NOT NULL,
   `description` VARCHAR(260) NOT NULL,
-  `update_type` ENUM('CREATE', 'DELETE', 'UPDATE', 'ENABLE', 'DISABLE') NOT NULL, 
+  `update_type` ENUM('CREATE', 'DELETE', 'UPDATE', 'ENABLE', 'DISABLE', 'UPDATE_FOLDERS_FOR_BACKUP') NOT NULL, 
   `activity_date` TIMESTAMP NOT NULL,
   PRIMARY KEY (`config_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
